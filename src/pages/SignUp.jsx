@@ -1,9 +1,9 @@
-import { PiHandWaving } from "react-icons/pi";
+import { MdEditDocument } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-const Login = () => {
+const SignUp = () => {
   return (
-    <div className="h-screen flex bg-[#F5F7F8] items-center justify-center">
+    <div className="h-[43.5rem] flex bg-[#F5F7F8] items-center justify-center">
       <div
         style={{
           boxShadow: `
@@ -16,7 +16,7 @@ const Login = () => {
         className="rounded-xl px-10 py-12"
       >
         <h2 className="text-3xl font-semibold pb-5 text-center flex items-center justify-center gap-2 mb-5">
-          Hi, Welcome back <PiHandWaving />
+          Register <MdEditDocument />
         </h2>
         <form className="w-[20.5rem]">
           <div className="form-control">
@@ -67,12 +67,17 @@ const Login = () => {
           </button>
         </div>
         <div className="flex gap-2 pt-4">
-          <h2>Don't have account?</h2>
-          <Link to={'/signUp'} className="text-blue-600 font-semibold underline underline-offset-2">Sign Up</Link>
+          <h2>Do you have an account?</h2>
+          <Link
+            to={"/login"}
+            className="text-blue-600 font-semibold underline underline-offset-2"
+          >
+            login
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

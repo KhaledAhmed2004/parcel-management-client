@@ -30,7 +30,7 @@ const Navbar = () => {
       {/* Navigation Links */}
       <ul className="hidden md:flex md:gap-5 lg:gap-8 items-center lg:flex-1 xl:justify-center md:text-base lg:text-lg font-medium">
         <NavLinks></NavLinks>
-        <li className="flex items-center gap-1 drop-shadow-md bg-[#F29F05] p-2 rounded-lg hover:scale-95 duration-200 ease-in-out transition-all">
+        <li className="flex items-center gap-1 drop-shadow-md bg-[#F29F05] p-2 rounded-lg hover:scale-95 duration-200 ease-in-out transition-all text-white">
           <IoIosNotifications className="text-xl" /> + 0
         </li>
       </ul>
