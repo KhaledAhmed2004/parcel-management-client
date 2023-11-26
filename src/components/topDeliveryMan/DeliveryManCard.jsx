@@ -1,5 +1,3 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 
 const DeliveryManCard = () => {
@@ -19,13 +17,7 @@ const DeliveryManCard = () => {
       >
         <h2>Name: Khaled</h2>
         <h2>Total Delivered: 100</h2>
-        <Box
-          sx={{
-            "& > legend": { mt: 2 },
-          }}
-        >
-          <Rating name="read-only" value={3} readOnly />
-        </Box>
+        <Rating name="read-only" value={2} readOnly />
       </div>
     </div>
   );
