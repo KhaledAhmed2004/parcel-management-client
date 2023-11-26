@@ -4,7 +4,7 @@ import { PiHandshake } from "react-icons/pi";
 
 const Feature = () => {
   return (
-    <>
+    <div className="mb-16">
       <h2 className="text-5xl py-10 text-center font-semibold">Our Features</h2>
       <div className="h-60 flex items-center gap-16 p-28">
         <div
@@ -68,7 +68,7 @@ const Feature = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
