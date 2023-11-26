@@ -3,7 +3,7 @@ import { IoMdSearch } from "react-icons/io";
 import bannerAnimation from "../../assets/animations/deliveryAnimation.json";
 const Banner = () => {
   return (
-    <div className="h-[36rem] flex items-center">
+    <div className="h-[36rem] flex md:flex-row  flex-col items-center">
       <div className="w-[70%]">
         <h1 className="text-4xl font-bold pb-6">
           Booking Simplicity, Delivery Precision, Management Ease – Your
