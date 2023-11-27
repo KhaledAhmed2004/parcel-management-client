@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 const SignUp = () => {
   return (
-    <div className="h-[43.5rem] flex bg-[#F5F7F8] items-center justify-center">
+    <div className="p-10 flex bg-[#F5F7F8] items-center justify-center">
       <div
         style={{
           boxShadow: `
@@ -21,6 +21,18 @@ const SignUp = () => {
         <form className="w-[20.5rem]">
           <div className="form-control">
             <label className="label">
+              <span className="label-text">User Name</span>
+            </label>
+            <input
+              type="text"
+              name="userName"
+              placeholder="user name"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
@@ -30,6 +42,27 @@ const SignUp = () => {
               className="input input-bordered"
               required
             />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Profile Url</span>
+            </label>
+            <input
+              type="file"
+              name="url"
+              //   placeholder="url..."
+              //   className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">User Type</span>
+            </label>
+            <select name="userType" className="input input-bordered">
+              <option value="User">User</option>
+              <option value="DeliveryMen">DeliveryMen</option>
+            </select>
           </div>
           <div className="form-control">
             <label className="label">
