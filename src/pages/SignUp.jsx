@@ -1,38 +1,62 @@
 import { MdEditDocument } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import imageUp from "../hooks/imageUp";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 const SignUp = () => {
+  const navigate = useNavigate();
   const axios = useAxiosSecure();
   const { createUser, updateUserProfile, signInWithGoogle } =
     useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const toastId = toast.loading("Registration in progress");
     const form = event.target;
-    const userName = form.userName.value;
-    const email = form.email.value;
-    const profilePicture = form.profilePicture.files[0];
-    const userType = form.userType.value;
     const password = form.password.value;
-    try {
-      const imageData = await imageUp(profilePicture);
-      console.log(imageData);
-      const result = await createUser(email, password);
-      console.log(result);
-      const userInfo = { userName, email, userType };
-      // const sendToDb = await axios.put(`/users/${email}`, userInfo);
-      const { data: sendToDb } = await axios.put(`/users/${email}`, userInfo);
-      const { data } = await axios.post(`/jwt`, email);
-      console.log(data);
-      await updateUserProfile(userName, imageData?.data?.display_url);
-    } catch (error) {
-      console.log(error);
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters", { id: toastId });
+    } else if (!/[a-z]/.test(password)) {
+      toast.error("Password must contain at least one lowercase letter", {
+        id: toastId,
+      });
+    } else if (!/[A-Z]/.test(password)) {
+      toast.error("Password must contain at least one uppercase letter", {
+        id: toastId,
+      });
+    } else if (!/\d/.test(password)) {
+      toast.error("Password must contain at least one digit", { id: toastId });
+    } else if (!/[\W_]/.test(password)) {
+      toast.error("Password must contain at least one special character", {
+        id: toastId,
+      });
+    } else {
+      const userName = form.userName.value;
+      const email = form.email.value;
+      const profilePicture = form.profilePicture.files[0];
+      const userType = form.userType.value;
+
+      try {
+        const imageData = await imageUp(profilePicture);
+        console.log(imageData);
+        const result = await createUser(email, password);
+        console.log(result);
+        const userInfo = { userName, email, userType };
+        const { data: sendToDb } = await axios.put(`/users/${email}`, userInfo);
+        const { data: token } = await axios.post(`/jwt`, email);
+        console.log(token);
+        await updateUserProfile(userName, imageData?.data?.display_url);
+        navigate("/");
+        toast.success("Registration Successful", { id: toastId });
+      } catch (error) {
+        toast.error(`Registration failed: ${error.code}`, { id: toastId });
+      }
     }
   };
+
   return (
     <div className="p-10 flex bg-[#F5F7F8] items-center justify-center">
       <div
