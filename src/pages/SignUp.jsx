@@ -1,7 +1,38 @@
 import { MdEditDocument } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import imageUp from "../hooks/imageUp";
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 const SignUp = () => {
+  const axios = useAxiosSecure();
+  const { createUser, updateUserProfile, signInWithGoogle } =
+    useContext(AuthContext);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const userName = form.userName.value;
+    const email = form.email.value;
+    const profilePicture = form.profilePicture.files[0];
+    const userType = form.userType.value;
+    const password = form.password.value;
+    try {
+      const imageData = await imageUp(profilePicture);
+      console.log(imageData);
+      const result = await createUser(email, password);
+      console.log(result);
+      const userInfo = { userName, email, userType };
+      // const sendToDb = await axios.put(`/users/${email}`, userInfo);
+      const { data: sendToDb } = await axios.put(`/users/${email}`, userInfo);
+      const { data } = await axios.post(`/jwt`, email);
+      console.log(data);
+      await updateUserProfile(userName, imageData?.data?.display_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="p-10 flex bg-[#F5F7F8] items-center justify-center">
       <div
@@ -18,7 +49,7 @@ const SignUp = () => {
         <h2 className="text-3xl font-semibold pb-5 text-center flex items-center justify-center gap-2 mb-5">
           Register <MdEditDocument />
         </h2>
-        <form className="w-[20.5rem]">
+        <form onSubmit={handleSubmit} className="w-[20.5rem]">
           <div className="form-control">
             <label className="label">
               <span className="label-text">User Name</span>
@@ -47,19 +78,13 @@ const SignUp = () => {
             <label className="label">
               <span className="label-text">Profile Url</span>
             </label>
-            <input
-              type="file"
-              name="url"
-              //   placeholder="url..."
-              //   className="input input-bordered"
-              required
-            />
+            <input type="file" name="profilePicture" required />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">User Type</span>
             </label>
-            <select name="userType" className="input input-bordered">
+            <select name="userType" className="input input-bordered" required>
               <option value="User">User</option>
               <option value="DeliveryMen">DeliveryMen</option>
             </select>
