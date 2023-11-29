@@ -7,7 +7,12 @@ import animation from "../assets/animations/deliveryAnimation.json";
 const PrivetRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
-  if (loading) return <Lottie animationData={animation}></Lottie>;
+  if (loading)
+    return (
+      <div className="h-screen">
+        <Lottie className="h-full" animationData={animation}></Lottie>
+      </div>
+    );
   if (user) return children;
   return (
     <Navigate
