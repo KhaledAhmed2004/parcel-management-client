@@ -16,7 +16,7 @@ const Navbar = () => {
         2px 2px 8px rgba(0, 0, 0, 0.15)
       `,
       }}
-      className="sticky flex justify-between items-center backdrop-blur-sm z-20 py-3 px-3 rounded-lg"
+      className="sticky top-0 flex justify-between items-center backdrop-blur-sm z-20 py-3 px-3 rounded-lg"
     >
       {/* Logo */}
       <Link

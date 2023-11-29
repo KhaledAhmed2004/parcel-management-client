@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-//   getAuth,
+  //   getAuth,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -13,6 +13,8 @@ import {
 // import { app } from "../firebase/firebase.config";
 // import app from "../config/firebase.config";
 import { auth } from "../config/firebase.config";
+import useClearCookie from "../hooks/useClearCookie";
+
 
 export const AuthContext = createContext(null);
 // const auth = getAuth(app);
@@ -42,8 +44,10 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
     setLoading(true);
+    // await clearCookie();
+    await useClearCookie();
     return signOut(auth);
   };
 

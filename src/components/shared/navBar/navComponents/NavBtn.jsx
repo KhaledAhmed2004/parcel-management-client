@@ -7,7 +7,6 @@ const NavBtn = () => {
   const [showProfile, setShowProfile] = useState(false);
   return (
     <>
-      {" "}
       {user?.email ? (
         <>
           <div
@@ -56,7 +55,10 @@ const NavBtn = () => {
           >
             Login
           </Link>
-          <Link className="transition-all hover:scale-95 ease-in-out duration-200 shadow-md border-2 border-[#F29F05] py-2 px-8 rounded-xl flex items-center justify-center">
+          <Link
+            to={"/signUp"}
+            className="transition-all hover:scale-95 ease-in-out duration-200 shadow-md border-2 border-[#F29F05] py-2 px-8 rounded-xl flex items-center justify-center"
+          >
             Sign Up
           </Link>
         </div>

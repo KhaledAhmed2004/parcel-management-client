@@ -57,6 +57,28 @@ const SignUp = () => {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    const toastId = toast.loading("Registration in progress");
+    try {
+      const { user } = await signInWithGoogle();
+      // console.log(user.displayName, user.email);
+      const userInfo = {
+        userName: user.displayName,
+        email: user.email,
+        userType: "user",
+      };
+      const { data: sendToDb } = await axios.put(
+        `/users/${user?.email}`,
+        userInfo
+      );
+      const { data: token } = await axios.post(`/jwt`, user?.email);
+      navigate("/");
+      toast.success("Registration Successful", { id: toastId });
+    } catch (error) {
+      toast.error(`Registration failed: ${error.code}`, { id: toastId });
+    }
+  };
+
   return (
     <div className="p-10 flex bg-[#F5F7F8] items-center justify-center">
       <div
@@ -134,6 +156,7 @@ const SignUp = () => {
         <div className="divider py-3">OR</div>
         <div className="form-control mt-6">
           <button
+            onClick={handleGoogleSignUp}
             style={{
               boxShadow: `
               -2px -2px 8px rgba(255, 255, 255, 1),
