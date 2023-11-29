@@ -65,7 +65,7 @@ const SignUp = () => {
       const userInfo = {
         userName: user.displayName,
         email: user.email,
-        userType: "user",
+        userType: "User",
       };
       const { data: sendToDb } = await axios.put(
         `/users/${user?.email}`,

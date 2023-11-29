@@ -3,6 +3,8 @@ import MainLayouts from "../layouts/MainLayouts";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import DashBoard from "../layouts/DashBoardLayouts";
+import PrivetRoute from "./PrivetRoute";
 
 const Routes = createBrowserRouter([
   {
@@ -14,6 +16,14 @@ const Routes = createBrowserRouter([
         element: <Home></Home>,
       },
     ],
+  },
+  {
+    path: "/dashBoard",
+    element: (
+      <PrivetRoute>
+        <DashBoard></DashBoard>
+      </PrivetRoute>
+    ),
   },
   {
     path: "/login",

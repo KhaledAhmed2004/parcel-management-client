@@ -1,7 +1,56 @@
 import { PiHandWaving } from "react-icons/pi";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { AuthContext } from "../provider/AuthProvider";
+import { useContext } from "react";
+import toast from "react-hot-toast";
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
+  const axios = useAxiosSecure();
+  const { signIn, updateUserProfile, signInWithGoogle } =
+    useContext(AuthContext);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const toastId = toast.loading("Login in progress");
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const result = await signIn(email, password);
+      console.log(result);
+      // const userInfo = { userName, email, userType };
+      // const { data: sendToDb } = await axios.put(`/users/${email}`, userInfo);
+      const { data: token } = await axios.post(`/jwt`, email);
+      console.log(token);
+      navigate(from, { replace: true });
+      toast.success("Login Successful", { id: toastId });
+    } catch (error) {
+      toast.error(`Login failed: ${error.code}`, { id: toastId });
+    }
+  };
+  const handleGoogleSignUp = async () => {
+    const toastId = toast.loading("Login in progress");
+    try {
+      const { user } = await signInWithGoogle();
+      const userInfo = {
+        userName: user.displayName,
+        email: user.email,
+        userType: "User",
+      };
+      const { data: sendToDb } = await axios.put(
+        `/users/${user?.email}`,
+        userInfo
+      );
+      const { data: token } = await axios.post(`/jwt`, user?.email);
+      navigate(from, { replace: true });
+      toast.success("Login Successful", { id: toastId });
+    } catch (error) {
+      toast.error(`Login failed: ${error.code}`, { id: toastId });
+    }
+  };
   return (
     <div className="h-screen flex bg-[#F5F7F8] items-center justify-center">
       <div
@@ -18,7 +67,7 @@ const Login = () => {
         <h2 className="text-3xl font-semibold pb-5 text-center flex items-center justify-center gap-2 mb-5">
           Hi, Welcome back <PiHandWaving />
         </h2>
-        <form className="w-[20.5rem]">
+        <form onSubmit={handleSubmit} className="w-[20.5rem]">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
@@ -52,6 +101,7 @@ const Login = () => {
         <div className="divider py-3">OR</div>
         <div className="form-control mt-6">
           <button
+            onClick={handleGoogleSignUp}
             style={{
               boxShadow: `
               -2px -2px 8px rgba(255, 255, 255, 1),
@@ -68,7 +118,12 @@ const Login = () => {
         </div>
         <div className="flex gap-2 pt-4">
           <h2>Don't have account?</h2>
-          <Link to={'/signUp'} className="text-blue-600 font-semibold underline underline-offset-2">Sign Up</Link>
+          <Link
+            to={"/signUp"}
+            className="text-blue-600 font-semibold underline underline-offset-2"
+          >
+            Sign Up
+          </Link>
         </div>
       </div>
     </div>
