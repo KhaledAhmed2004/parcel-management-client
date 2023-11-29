@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const BookParcel = () => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const axios = useAxiosSecure();
 
-  // State to store the weight input value
   const [parcelWeight, setParcelWeight] = useState("");
 
   const handleWeightChange = (e) => {
@@ -61,12 +62,14 @@ const BookParcel = () => {
 
     const toastId = toast.loading("Adding parcel...");
     try {
-      const send = await axios.post("/myAddedItems", info);
+      const send = await axios.post("/bookParcel", info);
       console.log(send);
       if (send?.data?.acknowledged) {
         toast.success("Parcel added successfully!", { id: toastId });
       }
+      navigate("/dashBoard/myParcels");
     } catch (error) {
+      toast.error(error.message, { id: toastId });
       console.log(error);
     }
   };
