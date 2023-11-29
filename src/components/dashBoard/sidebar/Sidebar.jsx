@@ -7,7 +7,10 @@ import ToggleBtn from "../btn/ToggleBtn";
 import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
+import { GiCardboardBoxClosed } from "react-icons/gi";
+
 import { BsGraphUp } from "react-icons/bs";
+import { FaBoxOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 
@@ -77,8 +80,16 @@ const Sidebar = () => {
                 label="Statistics"
                 address="/dashboard"
               />
-
-              {/* Menu Items */}
+              <MenuItem
+                icon={FaBoxOpen}
+                label="Book a Parcel"
+                address="bookParcel"
+              />
+              <MenuItem
+                icon={GiCardboardBoxClosed}
+                label="My Parcels"
+                address="myParcels"
+              />
             </nav>
           </div>
         </div>

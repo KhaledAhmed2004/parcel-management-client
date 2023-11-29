@@ -5,6 +5,8 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import PrivetRoute from "./PrivetRoute";
 import DashboardLayout from "../layouts/DashBoardLayouts";
+import BookParcel from "../pages/dashboard/user/BookParcel";
+import MyParcels from "../pages/dashboard/user/MyParcels";
 
 const Routes = createBrowserRouter([
   {
@@ -24,7 +26,16 @@ const Routes = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivetRoute>
     ),
-    children: [{}],
+    children: [
+      {
+        path: "bookParcel",
+        element: <BookParcel></BookParcel>,
+      },
+      {
+        path: "myParcels",
+        element: <MyParcels></MyParcels>,
+      },
+    ],
   },
   {
     path: "/login",
