@@ -9,6 +9,7 @@ import BookParcel from "../pages/dashboard/user/BookParcel";
 import MyParcels from "../pages/dashboard/user/MyParcels";
 import AllUsers from "../pages/dashboard/admin/Allusers";
 import Update from "../pages/dashboard/user/Update";
+import AllParcels from "../pages/dashboard/admin/AllParcels";
 
 const Routes = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const Routes = createBrowserRouter([
         element: <Update></Update>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/bookParcel/${params.id}`),
+      },
+      {
+        path: "appParcels",
+        element: <AllParcels></AllParcels>,
       },
     ],
   },

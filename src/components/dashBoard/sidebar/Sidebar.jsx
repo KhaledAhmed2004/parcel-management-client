@@ -81,11 +81,7 @@ const Sidebar = () => {
             {/* If a user is host */}
             {/* <ToggleBtn toggleHandler={toggleHandler} /> */}
             <nav>
-              <MenuItem
-                icon={BsGraphUp}
-                label="Statistics"
-                address="/dashboard"
-              />
+             
               {/* user Menu */}
               {role === "user" && <UserMenu></UserMenu>}
               {/* deliveryMan Menu */}

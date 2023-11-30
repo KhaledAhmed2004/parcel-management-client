@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Update = () => {
   const data = useLoaderData();
   const {
+    _id,
     phoneNumber,
     parcelType,
     parcelWeight,
@@ -39,38 +40,49 @@ const Update = () => {
     }
   };
 
-  const [formData, setFormData] = useState({
-    phoneNumber: "",
-    parcelType: "",
-    parcelWeight: 0,
-    receiverName: "",
-    receiverPhoneNumber: "",
-    parcelDeliveryAddress: "",
-    requestedDeliveryDate: "",
-    deliveryAddressLatitude: "",
-    deliveryAddressLongitude: "",
-  });
-
   const [totalPrice, setTotalPrice] = useState(calculatePrice(parcelWeight));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const phoneNumber = form.phoneNumber.value;
+    const parcelType = form.parcelType.value;
+    const parcelWeight = form.parcelWeight.value;
+    const receiverName = form.receiverName.value;
+    const receiverPhoneNumber = form.receiverPhoneNumber.value;
+    const parcelDeliveryAddress = form.parcelDeliveryAddress.value;
+    const requestedDeliveryDate = form.requestedDeliveryDate.value;
+    const deliveryAddressLatitude = form.deliveryAddressLatitude.value;
+    const deliveryAddressLongitude = form.deliveryAddressLongitude.value;
+
+    const update = {
+      phoneNumber,
+      parcelType,
+      parcelWeight,
+      price,
+      receiverName,
+      receiverPhoneNumber,
+      parcelDeliveryAddress,
+      requestedDeliveryDate,
+      deliveryAddressLatitude,
+      deliveryAddressLongitude,
+    };
+    const toastId = toast.loading("Update item...");
+    try {
+      const send = await axios.put(`/bookParcel/${_id}`, update);
+      console.log(send);
+      if (send?.data?.modifiedCount > 0) {
+        toast.success("Update successfully!", { id: toastId });
+        navigate("/dashBoard/myParcels");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchParcelDetails = async () => {
       try {
-        const response = await axios.get(`/myParcels/${id}`);
-        const parcelDetails = response.data;
-        setFormData({
-          phoneNumber: parcelDetails.phoneNumber,
-          parcelType: parcelDetails.parcelType,
-          parcelWeight: parcelDetails.parcelWeight,
-          receiverName: parcelDetails.receiverName,
-          receiverPhoneNumber: parcelDetails.receiverPhoneNumber,
-          parcelDeliveryAddress: parcelDetails.parcelDeliveryAddress,
-          requestedDeliveryDate: parcelDetails.requestedDeliveryDate,
-          deliveryAddressLatitude: parcelDetails.deliveryAddressLatitude,
-          deliveryAddressLongitude: parcelDetails.deliveryAddressLongitude,
-        });
-
-        // Calculate total price based on parcel weight
         setTotalPrice(calculatePrice(parcelWeight));
       } catch (error) {
         console.error("Error fetching parcel details:", error);
@@ -78,39 +90,7 @@ const Update = () => {
     };
 
     fetchParcelDetails();
-  }, [id, axios]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const toastId = toast.loading("Updating parcel...");
-
-    try {
-      const update = await axios.put(`/myParcels/${id}`, formData);
-      console.log(update);
-
-      if (update?.data?.modifiedCount > 0) {
-        toast.success("Parcel updated successfully!", { id: toastId });
-        navigate("/dashBoard/myParcels");
-      }
-    } catch (error) {
-      console.error("Error updating parcel:", error);
-      toast.error("Update failed", { id: toastId });
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    // Recalculate total price if parcel weight changes
-    if (name === "parcelWeight") {
-      setTotalPrice(calculatePrice(value));
-    }
-  };
+  }, [id, axios, parcelWeight]);
 
   return (
     <>
@@ -151,9 +131,6 @@ const Update = () => {
                 />
               </div>
             </div>
-
-            {/* Update form details */}
-            <div className="flex gap-3">{/* ... (existing code) ... */}</div>
 
             {/* Parcel Info Section */}
             <div className="flex gap-3">
@@ -196,7 +173,6 @@ const Update = () => {
                   placeholder="Parcel Weight (in kg)"
                   className="input input-bordered w-full"
                   defaultValue={parcelWeight}
-                  onChange={handleChange}
                   required
                 />
               </div>
