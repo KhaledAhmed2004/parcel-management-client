@@ -65,7 +65,7 @@ const SignUp = () => {
       const userInfo = {
         userName: user.displayName,
         email: user.email,
-        userType: "User",
+        userType: "user",
       };
       const { data: sendToDb } = await axios.put(
         `/users/${user?.email}`,
@@ -131,8 +131,8 @@ const SignUp = () => {
               <span className="label-text">User Type</span>
             </label>
             <select name="userType" className="input input-bordered" required>
-              <option value="User">User</option>
-              <option value="DeliveryMen">DeliveryMen</option>
+              <option value="user">User</option>
+              <option value="deliveryMen">DeliveryMen</option>
             </select>
           </div>
           <div className="form-control">

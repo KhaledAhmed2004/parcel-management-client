@@ -7,6 +7,7 @@ import PrivetRoute from "./PrivetRoute";
 import DashboardLayout from "../layouts/DashBoardLayouts";
 import BookParcel from "../pages/dashboard/user/BookParcel";
 import MyParcels from "../pages/dashboard/user/MyParcels";
+import AllUsers from "../pages/dashboard/admin/Allusers";
 
 const Routes = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const Routes = createBrowserRouter([
       {
         path: "myParcels",
         element: <MyParcels></MyParcels>,
+      },
+      {
+        path: "allUsers",
+        element: <AllUsers></AllUsers>,
       },
     ],
   },

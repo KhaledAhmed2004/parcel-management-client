@@ -1,21 +1,24 @@
 import { useContext, useState } from "react";
-// Components
-// import Logo from "../../Shared/Logo";
 import MenuItem from "./MenuItem";
 import ToggleBtn from "../btn/ToggleBtn";
-// Icons
 import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 import { GiCardboardBoxClosed } from "react-icons/gi";
-
 import { BsGraphUp } from "react-icons/bs";
 import { FaBoxOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { AuthContext } from "../../../provider/AuthProvider";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useRole from "../../../hooks/useRole";
+import UserMenu from "./sidebarMenu/UserMenu";
+import AdminMenu from "./sidebarMenu/AdminMenu";
+import DeliveryManMenu from "./sidebarMenu/DeliveryManMenu";
 
 const Sidebar = () => {
+  const [role] = useRole();
+  console.log("role----->", role);
   const { logOut } = useContext(AuthContext);
   const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -28,6 +31,7 @@ const Sidebar = () => {
   const handleToggle = () => {
     setActive(!isActive);
   };
+
   return (
     <>
       {/* Small Screen Navbar */}
@@ -75,23 +79,19 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* If a user is host */}
-            <ToggleBtn toggleHandler={toggleHandler} />
+            {/* <ToggleBtn toggleHandler={toggleHandler} /> */}
             <nav>
               <MenuItem
                 icon={BsGraphUp}
                 label="Statistics"
                 address="/dashboard"
               />
-              <MenuItem
-                icon={FaBoxOpen}
-                label="Book a Parcel"
-                address="bookParcel"
-              />
-              <MenuItem
-                icon={GiCardboardBoxClosed}
-                label="My Parcels"
-                address="myParcels"
-              />
+              {/* user Menu */}
+              {role === "user" && <UserMenu></UserMenu>}
+              {/* deliveryMan Menu */}
+              {role === "deliveryMan" && <DeliveryManMenu></DeliveryManMenu>}
+              {/* admin Menu */}
+              {role === "admin" && <AdminMenu></AdminMenu>}
             </nav>
           </div>
         </div>

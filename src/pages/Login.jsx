@@ -38,7 +38,7 @@ const Login = () => {
       const userInfo = {
         userName: user.displayName,
         email: user.email,
-        userType: "User",
+        userType: "user",
       };
       const { data: sendToDb } = await axios.put(
         `/users/${user?.email}`,
