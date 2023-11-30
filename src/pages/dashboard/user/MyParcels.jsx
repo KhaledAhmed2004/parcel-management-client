@@ -7,6 +7,8 @@ import animation from "../../../assets/animations/deliveryAnimation.json";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { LuFileEdit } from "react-icons/lu";
 import { MdOutlinePayment } from "react-icons/md";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const MyParcels = () => {
   const axios = useAxiosSecure();
@@ -27,6 +29,15 @@ const MyParcels = () => {
       </div>
     );
   }
+
+  const handleCancel = async (id) => {
+    const res = await axios.delete(`/bookParcel/${id}`);
+    if (res.data.deletedCount > 0) {
+      toast.success("Delete successfully");
+      refetch();
+    }
+    console.log(res);
+  };
 
   return (
     <div>
@@ -62,15 +73,17 @@ const MyParcels = () => {
                   <td>
                     {parcel.status === "pending" && (
                       <div className="flex gap-2">
-                        <button
+                        <Link
+                          // to={`/update`}
+                          to={`/dashBoard/update/${parcel._id}`}
                           className="p-2 bg-gray-200 text-lg rounded-lg"
-                          onClick={() => handleUpdate(parcel.id)}
+                          onClick={() => handleUpdate(parcel._id)}
                         >
                           <LuFileEdit />
-                        </button>
+                        </Link>
                         <button
                           className="p-2 bg-gray-200 text-lg rounded-lg"
-                          onClick={() => handleCancel(parcel.id)}
+                          onClick={() => handleCancel(parcel._id)}
                         >
                           <MdOutlineDeleteOutline />
                         </button>

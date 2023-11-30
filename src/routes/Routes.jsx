@@ -8,6 +8,7 @@ import DashboardLayout from "../layouts/DashBoardLayouts";
 import BookParcel from "../pages/dashboard/user/BookParcel";
 import MyParcels from "../pages/dashboard/user/MyParcels";
 import AllUsers from "../pages/dashboard/admin/Allusers";
+import Update from "../pages/dashboard/user/Update";
 
 const Routes = createBrowserRouter([
   {
@@ -39,6 +40,12 @@ const Routes = createBrowserRouter([
       {
         path: "allUsers",
         element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "update/:id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/bookParcel/${params.id}`),
       },
     ],
   },

@@ -10,14 +10,23 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <div className="bg-[#F5F7F8]">
-          <RouterProvider router={Routes}></RouterProvider>
-          <Toaster />
-        </div>
-      </QueryClientProvider>
-    </AuthProvider>
-  </React.StrictMode>
+  <AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <div className="bg-[#F5F7F8]">
+        <RouterProvider router={Routes}></RouterProvider>
+        <Toaster />
+      </div>
+    </QueryClientProvider>
+  </AuthProvider>
+
+  // <React.StrictMode>
+  //   <AuthProvider>
+  //     <QueryClientProvider client={queryClient}>
+  //       <div className="bg-[#F5F7F8]">
+  //         <RouterProvider router={Routes}></RouterProvider>
+  //         <Toaster />
+  //       </div>
+  //     </QueryClientProvider>
+  //   </AuthProvider>
+  // </React.StrictMode>
 );
