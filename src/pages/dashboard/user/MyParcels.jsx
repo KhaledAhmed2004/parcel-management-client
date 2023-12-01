@@ -9,6 +9,7 @@ import { LuFileEdit } from "react-icons/lu";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const MyParcels = () => {
   const axios = useAxiosSecure();
@@ -31,12 +32,33 @@ const MyParcels = () => {
   }
 
   const handleCancel = async (id) => {
-    const res = await axios.delete(`/bookParcel/${id}`);
-    if (res.data.deletedCount > 0) {
-      toast.success("Delete successfully");
-      refetch();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`/bookParcel/${id}`);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        refetch();
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "An error occurred while deleting the file.",
+          icon: "error",
+        });
+      }
     }
-    console.log(res);
   };
 
   return (
@@ -67,7 +89,8 @@ const MyParcels = () => {
                   <td>{parcel.parcelType}</td>
                   <td>{parcel.requestedDeliveryDate}</td>
                   <td>{parcel.approximateDeliveryDate}</td>
-                  <td>{parcel.bookingDate}</td>
+                  {/* <td>{parcel.bookingDate}</td> */}
+                  <td>{new Date(parcel.bookingDate).toLocaleDateString()}</td>
                   <td>{parcel.deliveryMenId}</td>
                   <td>{parcel.status}</td>
                   <td>

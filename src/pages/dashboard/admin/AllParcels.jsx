@@ -1,20 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
+import Lottie from "lottie-react";
 import { useState } from "react";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import animation from "../../../assets/animations/deliveryAnimation.json";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllParcels = () => {
-  // Sample parcel data, replace this with your actual data fetching logic
-  const parcelsData = [
-    {
-      id: 1,
-      userName: "Cy Ganderton",
-      userPhone: "123-456-7890",
-      bookingDate: "2023-01-01",
-      requestedDeliveryDate: "2023-01-10",
-      cost: "$20",
-      status: "Pending",
+  const axios = useAxiosSecure();
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["myParcels"],
+    queryFn: async () => {
+      const res = await axios.get(`/allParcels`);
+      return res.data;
     },
-    // Add more parcel data as needed
-  ];
+  });
 
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +39,14 @@ const AllParcels = () => {
     setIsModalOpen(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="h-screen">
+        <Lottie className="h-full" animationData={animation}></Lottie>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -55,16 +63,22 @@ const AllParcels = () => {
             </tr>
           </thead>
           <tbody>
-            {parcelsData.map((parcel) => (
+            {data.map((parcel) => (
               <tr key={parcel.id}>
-                <td>{parcel.userName}</td>
-                <td>{parcel.userPhone}</td>
-                <td>{parcel.bookingDate}</td>
+                <td>{parcel.name}</td>
+                <td>{parcel.phoneNumber}</td>
+                {/* <td>{parcel.bookingDate}</td> */}
+                <td>{new Date(parcel.bookingDate).toLocaleDateString()}</td>
                 <td>{parcel.requestedDeliveryDate}</td>
-                <td>{parcel.cost}</td>
+                <td>{parcel.price}</td>
                 <td>{parcel.status}</td>
                 <td>
-                  <button onClick={handleManageClick}>Manage</button>
+                  <button
+                    className="p-2 bg-gray-200 text-lg rounded-lg"
+                    onClick={handleManageClick}
+                  >
+                    <MdOutlineManageAccounts />
+                  </button>
                 </td>
               </tr>
             ))}
