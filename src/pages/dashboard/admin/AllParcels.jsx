@@ -53,6 +53,7 @@ const AllParcels = () => {
         <table className="table">
           <thead>
             <tr>
+              <th></th>
               <th>User's Name</th>
               <th>User's Phone</th>
               <th>Booking Date</th>
@@ -63,8 +64,9 @@ const AllParcels = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((parcel) => (
+            {data.map((parcel, index) => (
               <tr key={parcel.id}>
+                <td>{index + 1}</td>
                 <td>{parcel.name}</td>
                 <td>{parcel.phoneNumber}</td>
                 {/* <td>{parcel.bookingDate}</td> */}

@@ -10,6 +10,9 @@ import MyParcels from "../pages/dashboard/user/MyParcels";
 import AllUsers from "../pages/dashboard/admin/Allusers";
 import Update from "../pages/dashboard/user/Update";
 import AllParcels from "../pages/dashboard/admin/AllParcels";
+import AllDeliveryMan from "../pages/dashboard/admin/AllDeliveryMan";
+import MyReview from "../pages/dashboard/deliveryMan/MyReview";
+import MyDeliveryList from "../pages/dashboard/deliveryMan/MyDeliveryList";
 
 const Routes = createBrowserRouter([
   {
@@ -46,11 +49,25 @@ const Routes = createBrowserRouter([
         path: "update/:id",
         element: <Update></Update>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/bookParcel/${params.id}`),
+          fetch(
+            `https://parcel-management-server-pi.vercel.app/bookParcel/${params.id}`
+          ),
       },
       {
         path: "appParcels",
         element: <AllParcels></AllParcels>,
+      },
+      {
+        path: "allDeliveryMan",
+        element: <AllDeliveryMan></AllDeliveryMan>,
+      },
+      {
+        path: "myReview",
+        element: <MyReview></MyReview>,
+      },
+      {
+        path: "myDeliveryList",
+        element: <MyDeliveryList></MyDeliveryList>,
       },
     ],
   },

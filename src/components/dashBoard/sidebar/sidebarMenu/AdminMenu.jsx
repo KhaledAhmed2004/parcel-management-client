@@ -17,9 +17,9 @@ const AdminMenu = () => {
       <MenuItem
         icon={MdOutlineDeliveryDining}
         label="All Delivery Men"
-        address="myParcels"
+        address="allDeliveryMan"
       />
-      <MenuItem icon={LuUsers2} label=" All Users" address="allUsers" />
+      <MenuItem icon={LuUsers2} label="All Users" address="allUsers" />
     </>
   );
 };

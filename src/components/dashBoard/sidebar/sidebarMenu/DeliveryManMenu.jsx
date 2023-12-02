@@ -8,9 +8,9 @@ const DeliveryManMenu = () => {
       <MenuItem
         icon={LuClipboardList}
         label="My Delivery List"
-        address="bookParcel"
+        address="myDeliveryList"
       />
-      <MenuItem icon={GoCodeReview} label="My Reviews" address="myParcels" />
+      <MenuItem icon={GoCodeReview} label="My Reviews" address="myReview" />
     </>
   );
 };
