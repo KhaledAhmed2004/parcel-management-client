@@ -88,7 +88,7 @@ const MyParcels = () => {
                   <td>{index + 1}</td>
                   <td>{parcel.parcelType}</td>
                   <td>{parcel.requestedDeliveryDate}</td>
-                  <td>{parcel.approximateDeliveryDate}</td>
+                  <td>{parcel.deliveryDate}</td>
                   {/* <td>{parcel.bookingDate}</td> */}
                   <td>{new Date(parcel.bookingDate).toLocaleDateString()}</td>
                   <td>{parcel.deliveryMenId}</td>
