@@ -38,6 +38,7 @@ const SignUp = () => {
       const email = form.email.value;
       const profilePicture = form.profilePicture.files[0];
       const userType = form.userType.value;
+      
 
       try {
         const imageData = await imageUp(profilePicture);
