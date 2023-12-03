@@ -91,7 +91,7 @@ const MyParcels = () => {
                   <td>{parcel.deliveryDate}</td>
                   {/* <td>{parcel.bookingDate}</td> */}
                   <td>{new Date(parcel.bookingDate).toLocaleDateString()}</td>
-                  <td>{parcel.deliveryMenId}</td>
+                  <td>{parcel.deliveryMan}</td>
                   <td>{parcel.status}</td>
                   <td>
                     {parcel.status === "pending" && (
@@ -112,11 +112,11 @@ const MyParcels = () => {
                         </button>
                       </div>
                     )}
-                    {/* {parcel.status === "delivered" && (
+                    {parcel.status === "delivered" && (
                       <button onClick={() => handleReview(parcel.id)}>
                         Review
                       </button>
-                    )} */}
+                    )}
                     {/* <button
                       className="p-2 bg-gray-200 text-lg rounded-lg"
                       onClick={() => handlePay(parcel.id)}
