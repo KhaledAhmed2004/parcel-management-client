@@ -13,6 +13,7 @@ import AllParcels from "../pages/dashboard/admin/AllParcels";
 import AllDeliveryMan from "../pages/dashboard/admin/AllDeliveryMan";
 import MyReview from "../pages/dashboard/deliveryMan/MyReview";
 import MyDeliveryList from "../pages/dashboard/deliveryMan/MyDeliveryList";
+import Profile from "../components/dashBoard/Profile";
 
 const Routes = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const Routes = createBrowserRouter([
       {
         path: "myDeliveryList",
         element: <MyDeliveryList></MyDeliveryList>,
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>,
       },
     ],
   },

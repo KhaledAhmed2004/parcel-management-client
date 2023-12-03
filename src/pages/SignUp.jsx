@@ -132,7 +132,7 @@ const SignUp = () => {
             </label>
             <select name="userType" className="input input-bordered" required>
               <option value="user">User</option>
-              <option value="deliveryMen">DeliveryMen</option>
+              <option value="deliveryMan">DeliveryMen</option>
             </select>
           </div>
           <div className="form-control">
